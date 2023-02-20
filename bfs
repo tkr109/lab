@@ -1,0 +1,47 @@
+clc;
+clear all;
+
+a=[1 1 0 1 0 ; 0 -1 1 0 1 ];
+b=[1;0];
+c=[1 1 1 0 0 ];
+
+var=size(a,2);
+const=size(a,1);
+
+totalsol=nchoosek(var,const);
+pairs=nchoosek(1:var,const);
+sol=[];
+
+for i=1:totalsol
+   y=zeros(size(a,2),1);
+   
+   B=a(:,pairs(i,:));
+   if det(B)~=0
+   x=B\b;
+   if all(x>=0 & x~=inf &x~=-inf)
+        y(pairs(i,:))=x;
+   end
+   sol=[sol y];
+   end
+end
+
+
+z=c*sol;
+
+[val,ind]=max(z);
+
+bfs=sol(:,ind);
+bfs
+
+
+ans->
+
+bfs =
+
+     0
+     1
+     1
+     0
+     0
+
+>> 
