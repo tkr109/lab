@@ -1,0 +1,114 @@
+
+clc;
+clear all;
+close all;
+
+
+a=[2 4 ; 3 5 ;1 0 ; 0 1];
+b=[8;15;0;0];
+c=[3 2];
+
+x1=0:1:max(b);
+
+x21=(b(1)-x1*a(1,1))/a(1,2);
+x22=(b(2)-x1*a(2,1))/a(2,1);
+
+x21=max(0,x21);
+x22=max(0,x22);
+
+plot(x1,x21,'r',x1,x22,'g')
+title('graph')
+xlabel('x1')
+ylabel('x2')
+legend('2x1+4x1>=8','3x1+5x2>=15')
+
+sol=[]
+
+for i=1:length(a)
+    a1=a(i,:);
+    b1=b(i);
+
+    for j=i+1:length(a)
+        a2=a(j,:);
+        b2=b(j);
+
+        a3=[a1;a2];
+        b3=[b1;b2];
+
+        x=a3\b3;
+        sol=[sol x];
+    end
+end
+
+sol
+
+x1=sol(1,:);
+x2=sol(2,:);
+y=find(2*x1+x2*4<8);
+sol(:,y)=[];
+
+x1=sol(1,:);
+x2=sol(2,:);
+y=find(3*x1+x2*5<15);
+sol(:,y)=[];
+
+
+x1=sol(1,:);
+x2=sol(2,:);
+y=find(x1<0);
+sol(:,y)=[];
+
+x1=sol(1,:);
+x2=sol(2,:);
+y=find(x2<0);
+sol(:,y)=[]
+
+
+sol=sol';
+
+for i=1:size(sol,1)
+    obj(i,:)=sum(sol(i,:).*c)
+end
+
+
+[val,index]=max(obj);
+
+fprintf('the optimal value is %d \n',val);
+fprintf('the optimal sol is ');
+disp(sol(index,:))
+
+
+ans->
+
+
+sol =
+
+     []
+
+
+sol =
+
+   10.0000         0    4.0000         0    5.0000         0
+   -3.0000    2.0000         0    3.0000         0         0
+
+
+sol =
+
+     0     5
+     3     0
+
+
+obj =
+
+     6
+
+
+obj =
+
+     6
+    15
+
+the optimal value is 15 
+the optimal sol is      5     0
+
+>> 
